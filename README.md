@@ -9,7 +9,7 @@ Desenvolvido como parte da Trilha ReactJS do evento NLW da RocketSeat, que ocorr
  - [x] Aplicar conhecimentos em HTML, CSS, JavaScript, TypeScript;
  - [x] Aplicar conhecimentos sobre requisições em APIs, utilização de fake APIs e API Rest;
  - [x] Conhecer e aprender a criar aplicações com React;
- - [x] Uso de frameworks e bibliotecas JS e CSS.
+ - [x] Utilizar frameworks e bibliotecas JS e CSS.
  
   
   <h4 align="center"> 
