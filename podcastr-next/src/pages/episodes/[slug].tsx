@@ -3,10 +3,12 @@ import { useRouter } from 'next/router';
 import { api } from '../../services/api';
 import { format, parseISO } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
-import { convertDurantionToTimeString } from '../../utils/convertDurationToTimeString';
+import { convertDurationToTimeString } from '../../utils/convertDurationToTimeString';
 import styles from './episode.module.scss';
 import Image from 'next/image';
 import Link from 'next/link';
+import {  usePlayer } from '../../contexts/PlayerContext';
+import Head from 'next/head';
 
 type Episode = {
   id: string,
@@ -26,6 +28,8 @@ type EpisodeProps = {
 
 export default function Episode({ episode }: EpisodeProps) {
 
+  const { play } = usePlayer();
+
    // router desnecessário se eu tiver usando fallback blocking no paths 
   const router = useRouter();
   if (router.isFallback) {
@@ -34,6 +38,9 @@ export default function Episode({ episode }: EpisodeProps) {
 
   return (
    <div className={styles.episode}>
+     <Head>
+       <title>{episode.title} | Podcastr</title>
+     </Head>
      <div className={styles.thumbnailContainer}>
        <Link href='/'>
           <button type="button">
@@ -46,7 +53,7 @@ export default function Episode({ episode }: EpisodeProps) {
           src={episode.thumbnail}
           objectFit='cover'
        />
-       <button type="button">
+       <button type="button" onClick={() => play(episode)}>
          <img src="/play.svg" alt="Tocar episódio"/>
        </button>
      </div>
@@ -105,7 +112,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
       members: data.members,
       publishedAt: format(parseISO(data.published_at), 'd MMM yy', { locale: ptBR }),
       duration: Number(data.file.duration),
-      durationAsString: convertDurantionToTimeString(Number(data.file.duration)),
+      durationAsString: convertDurationToTimeString(Number(data.file.duration)),
       description: data.description,
       url: data.file.url
   }
